@@ -1,0 +1,25 @@
+{
+  "name": "btc_address_generator",
+  "version": "1.0.0",
+  "description": "a btc address generator node package",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "npm run build && npm run start"
+  },
+  "author": "Abba Adamu",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.6",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/prompt-sync": "^4.2.3",
+    "bip32": "^4.0.0",
+    "bitcoinjs-lib": "^6.1.5",
+    "ecpair": "^2.1.0",
+    "prompt-sync": "^4.2.0",
+    "tiny-secp256k1": "^2.2.3"
+  }
+}
