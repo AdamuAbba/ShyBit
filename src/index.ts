@@ -1,16 +1,38 @@
 //import packages:
+import { BIP32Interface } from "bip32";
 import * as bitcoin from "bitcoinjs-lib";
-import { Psbt, payments, Transaction } from "bitcoinjs-lib";
-import { ECPairFactory, ECPairAPI, ECPairInterface } from "ecpair";
-import { SignedTransactionData } from "./types";
+import { Psbt, Transaction, payments } from "bitcoinjs-lib";
+import chalk from "chalk";
+import { exec } from "child_process";
+import Table from "cli-table";
+import { paste } from "copy-paste";
+import { ECPairAPI, ECPairFactory, ECPairInterface } from "ecpair";
 import * as ecc from "tiny-secp256k1";
-import { BIP32Factory, BIP32Interface } from "bip32";
+import { IBitCliTransactionDetails, SignedTransactionData } from "./types";
 var prompt = require("prompt-sync")({ sigint: false });
 
+const table = new Table({
+  head: ["option", "function", "category"],
+  colWidths: [10, 40, 40],
+  rows: [
+    ["1", "Create Wallet Address", "Wallet"],
+    ["2", "View Wallet data", "Wallet"],
+    ["3", "Decode raw transaction hex", "Transaction"],
+    ["4", "Decode Script", "Transaction"],
+  ],
+});
+
+const logger = {
+  success: (value: string) => console.log(chalk.green(value)),
+  warning: (value: string) => console.log(chalk.yellow(value)),
+  error: (value: string) => console.log(chalk.red(value)),
+};
 //set network to testnet
 const { testnet } = bitcoin.networks;
 
 const ECPair: ECPairAPI = ECPairFactory(ecc);
+
+const BLOCK_CYPHER_BASE_URL = "https://api.blockcypher.com";
 
 //generate keypair "public" and "private"
 const generated_keyPair: ECPairInterface = ECPair.makeRandom({
@@ -53,23 +75,106 @@ const generateWalletAddress = () => {
 const checkWalletBalance = async () => {
   console.log("Enter Wallet address bellow to check balance");
   const walletAddress = prompt("Address == ");
-  const url = `https://api.blockcypher.com/v1/btc/test3/addrs/${walletAddress}/balance`;
+  const url = `${BLOCK_CYPHER_BASE_URL}/v1/btc/test3/addrs/${walletAddress}/balance`;
   const result = await fetch(url);
   const resultJsonData = await result.json();
   console.log("WalletData =>>", resultJsonData);
 };
 
-console.log(
-  "Welcome to shyX bitcoin Wallet\n1 == Create Wallet Address\n2 == View Wallet data"
-);
-const option = prompt("Option == ");
-switch (Number(option)) {
-  case 1:
-    generateWalletAddress();
-    break;
-  case 2:
-    checkWalletBalance();
-    break;
-  default:
-    break;
-}
+const decodeRawTransaction = async () => {
+  const hexInput: "yes" | "no" = prompt("paste hex from clipboard? (yes/no): ");
+  switch (hexInput.toLocaleLowerCase()) {
+    case "yes":
+      const dataFromClipboard = paste();
+      logger.success(`clipboard :${dataFromClipboard}`);
+      exec(
+        `bitcoin-cli decoderawtransaction ${dataFromClipboard}`,
+        (error, stdout, stderr) => {
+          if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+          }
+          if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+          }
+          const outputAsJsObject: IBitCliTransactionDetails =
+            JSON.parse(stdout);
+          const { locktime, version, vin, vout } = outputAsJsObject;
+          const formatted = { locktime, version, vin, vout };
+          console.log(`\n${JSON.stringify(formatted, null, " ")}`);
+        }
+      );
+      break;
+    case "no":
+      logger.error("Nice going wise guy you broke the app");
+      break;
+    default:
+      break;
+  }
+};
+
+const decodeScript = () => {
+  const hexInput: "yes" | "no" = prompt(
+    "paste script hex from clipboard? (yes/no): "
+  );
+  switch (hexInput.toLocaleLowerCase()) {
+    case "yes":
+      const dataFromClipboard = paste();
+      logger.success(`clipboard :${dataFromClipboard}`);
+      //Todo check if bitcoind service is running on host machine first
+      exec(
+        `bitcoin-cli decodescript ${dataFromClipboard}`,
+        (error, stdout, stderr) => {
+          if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+          }
+          if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+          }
+          console.log(`\n${stdout}`);
+        }
+      );
+      break;
+    case "no":
+      logger.error("Nice going wise guy you broke the app");
+      break;
+    default:
+      break;
+  }
+};
+
+const main = (): void => {
+  // figlet("ShyBit-CLI", (err, data): void => {
+  //   if (err) {
+  //     console.log("Something went wrong...");
+  //     console.dir(err);
+  //     return;
+  //   }
+  //   console.log(logger.success(data as string));
+  // });
+  // logger.success("Welcome to shyBit-CLI bitcoin Wallet");
+
+  console.log(table.toString());
+  const option = prompt("Option : ");
+  switch (Number(option)) {
+    case 1:
+      generateWalletAddress();
+      break;
+    case 2:
+      checkWalletBalance();
+      break;
+    case 3:
+      decodeRawTransaction();
+      break;
+    case 4:
+      decodeScript();
+      break;
+    default:
+      break;
+  }
+};
+
+main();

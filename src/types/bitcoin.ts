@@ -77,3 +77,38 @@ export interface SignedTransactionData {
   txHex: string;
   txId: string;
 }
+
+export interface IBitCliVin {
+  txid: string;
+  vout: number;
+  scriptSig: {
+    asm: string;
+    hex: string;
+  };
+  txinwitness: string[];
+  sequence: number;
+}
+
+export interface IBitCliVout {
+  value: number;
+  n: number;
+  scriptPubKey: {
+    asm: string;
+    desc: string;
+    hex: string;
+    address: string;
+    type: string;
+  };
+}
+
+export interface IBitCliTransactionDetails {
+  txid: string;
+  hash: string;
+  version: number;
+  size: number;
+  vsize: number;
+  weight: number;
+  locktime: number;
+  vin: IBitCliVin[];
+  vout: IBitCliVout[];
+}

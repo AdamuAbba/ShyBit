@@ -31,17 +31,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signTransaction = void 0;
-//import packages:
 const bitcoin = __importStar(require("bitcoinjs-lib"));
 const bitcoinjs_lib_1 = require("bitcoinjs-lib");
+const chalk_1 = __importDefault(require("chalk"));
+const child_process_1 = require("child_process");
+const cli_table_1 = __importDefault(require("cli-table"));
+const copy_paste_1 = require("copy-paste");
 const ecpair_1 = require("ecpair");
 const ecc = __importStar(require("tiny-secp256k1"));
 var prompt = require("prompt-sync")({ sigint: false });
+const table = new cli_table_1.default({
+    head: ["option", "function", "category"],
+    colWidths: [10, 40, 40],
+    rows: [
+        ["1", "Create Wallet Address", "Wallet"],
+        ["2", "View Wallet data", "Wallet"],
+        ["3", "Decode raw transaction hex", "Transaction"],
+        ["4", "Decode Script", "Transaction"],
+    ],
+});
+const logger = {
+    success: (value) => console.log(chalk_1.default.green(value)),
+    warning: (value) => console.log(chalk_1.default.yellow(value)),
+    error: (value) => console.log(chalk_1.default.red(value)),
+};
 //set network to testnet
 const { testnet } = bitcoin.networks;
 const ECPair = (0, ecpair_1.ECPairFactory)(ecc);
+const BLOCK_CYPHER_BASE_URL = "https://api.blockcypher.com";
 //generate keypair "public" and "private"
 const generated_keyPair = ECPair.makeRandom({
     network: testnet,
@@ -61,34 +83,105 @@ const signTransaction = (psbt, node) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.signTransaction = signTransaction;
 const generateWalletAddress = () => {
-    var _a;
     const p2pkhAddress = bitcoinjs_lib_1.payments.p2pkh({
         network: testnet,
         pubkey: generated_keyPair.publicKey,
     });
     console.log("Wallet Address data =>>", {
         public_key: generated_keyPair.publicKey,
-        private_key: (_a = generated_keyPair.privateKey) === null || _a === void 0 ? void 0 : _a.buffer,
+        private_key: generated_keyPair.privateKey,
         "wallet_address(p2pkh)": p2pkhAddress.address,
     });
 };
 const checkWalletBalance = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Enter Wallet address bellow to check balance");
     const walletAddress = prompt("Address == ");
-    const url = `https://api.blockcypher.com/v1/btc/test3/addrs/${walletAddress}/balance`;
+    const url = `${BLOCK_CYPHER_BASE_URL}/v1/btc/test3/addrs/${walletAddress}/balance`;
     const result = yield fetch(url);
     const resultJsonData = yield result.json();
     console.log("WalletData =>>", resultJsonData);
 });
-console.log("Welcome to shyX bitcoin Wallet\n1 == Create Wallet Address\n2 == View Wallet data");
-const option = prompt("Option == ");
-switch (Number(option)) {
-    case 1:
-        generateWalletAddress();
-        break;
-    case 2:
-        checkWalletBalance();
-        break;
-    default:
-        break;
-}
+const decodeRawTransaction = () => __awaiter(void 0, void 0, void 0, function* () {
+    const hexInput = prompt("paste hex from clipboard? (yes/no): ");
+    switch (hexInput.toLocaleLowerCase()) {
+        case "yes":
+            const dataFromClipboard = (0, copy_paste_1.paste)();
+            logger.success(`clipboard :${dataFromClipboard}`);
+            (0, child_process_1.exec)(`bitcoin-cli decoderawtransaction ${dataFromClipboard}`, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                const outputAsJsObject = JSON.parse(stdout);
+                const { locktime, version, vin, vout } = outputAsJsObject;
+                const formatted = { locktime, version, vin, vout };
+                console.log(`\n${JSON.stringify(formatted, null, " ")}`);
+            });
+            break;
+        case "no":
+            logger.error("Nice going wise guy you broke the app");
+            break;
+        default:
+            break;
+    }
+});
+const decodeScript = () => {
+    const hexInput = prompt("paste script hex from clipboard? (yes/no): ");
+    switch (hexInput.toLocaleLowerCase()) {
+        case "yes":
+            const dataFromClipboard = (0, copy_paste_1.paste)();
+            logger.success(`clipboard :${dataFromClipboard}`);
+            //Todo check if bitcoind service is running on host machine first
+            (0, child_process_1.exec)(`bitcoin-cli decodescript ${dataFromClipboard}`, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`\n${stdout}`);
+            });
+            break;
+        case "no":
+            logger.error("Nice going wise guy you broke the app");
+            break;
+        default:
+            break;
+    }
+};
+const main = () => {
+    // figlet("ShyBit-CLI", (err, data): void => {
+    //   if (err) {
+    //     console.log("Something went wrong...");
+    //     console.dir(err);
+    //     return;
+    //   }
+    //   console.log(logger.success(data as string));
+    // });
+    // logger.success("Welcome to shyBit-CLI bitcoin Wallet");
+    console.log(table.toString());
+    const option = prompt("Option : ");
+    switch (Number(option)) {
+        case 1:
+            generateWalletAddress();
+            break;
+        case 2:
+            checkWalletBalance();
+            break;
+        case 3:
+            decodeRawTransaction();
+            break;
+        case 4:
+            decodeScript();
+            break;
+        default:
+            break;
+    }
+};
+main();

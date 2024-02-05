@@ -1,7 +1,7 @@
 {
   "name": "btc_address_generator",
   "version": "1.0.0",
-  "description": "a btc address generator node package",
+  "description": "a simple bitcoin cli toolkit",
   "main": "./src/index.ts",
   "scripts": {
     "build": "npx tsc",
@@ -15,11 +15,22 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@types/cli-table": "^0.3.4",
+    "@types/copy-paste": "^1.1.33",
+    "@types/figlet": "^1.5.8",
+    "@types/prismjs": "^1.26.3",
     "@types/prompt-sync": "^4.2.3",
     "bip32": "^4.0.0",
     "bitcoinjs-lib": "^6.1.5",
+    "boxen": "^7.1.1",
+    "chalk": "4",
+    "cli-table": "^0.3.11",
+    "copy-paste": "^1.5.3",
     "ecpair": "^2.1.0",
+    "figlet": "^1.7.0",
+    "prismjs": "^1.29.0",
     "prompt-sync": "^4.2.0",
+    "raw-transaction-decoder": "^1.0.6",
     "tiny-secp256k1": "^2.2.3"
   }
 }
