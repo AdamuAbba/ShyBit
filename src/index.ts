@@ -36,26 +36,6 @@ const generated_keyPair: ECPairInterface = ECPair.makeRandom({
   network: testnet,
 });
 
-// const bitcoinTransactionBuilder = new bitcoin.Transaction();
-// const psbt = new Psbt({ network: testnet });
-
-// export const signTransaction = async (
-//   psbt: Psbt,
-//   node: BIP32Interface
-// ): Promise<SignedTransactionData> => {
-// await psbt.signAllInputsHD(node);
-// await psbt.validateSignaturesOfAllInputs(validator);
-// await psbt.finalizeAllInputs();
-
-//   const tx: Transaction = psbt.extractTransaction();
-//   const data: SignedTransactionData = {
-//     txHex: tx.toHex(),
-//     txId: tx.getId(),
-//   };
-
-//   return data;
-// };
-
 const generateWalletAddress = () => {
   const p2pkhAddress = payments.p2pkh({
     network: testnet,
@@ -104,7 +84,7 @@ const decodeRawTransaction = async () => {
       );
       break;
     case "no":
-      logger.error("Nice going wise guy you broke the app");
+      logger.error("Nice going wise guy you broke the app 🤦‍♂️");
       break;
     default:
       break;
