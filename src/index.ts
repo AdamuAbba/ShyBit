@@ -13,7 +13,7 @@ var prompt = require("prompt-sync")({ sigint: false });
 
 const table = new Table({
   head: ["option", "function", "category"],
-  colWidths: [10, 40, 40],
+  colWidths: [10, 30, 30],
   rows: [
     ["1", "Create Wallet Address", "Wallet"],
     ["2", "View Wallet data", "Wallet"],
@@ -27,37 +27,34 @@ const logger = {
   warning: (value: string) => console.log(chalk.yellow(value)),
   error: (value: string) => console.log(chalk.red(value)),
 };
-//set network to testnet
+
 const { testnet } = bitcoin.networks;
-
 const ECPair: ECPairAPI = ECPairFactory(ecc);
-
 const BLOCK_CYPHER_BASE_URL = "https://api.blockcypher.com";
 
-//generate keypair "public" and "private"
 const generated_keyPair: ECPairInterface = ECPair.makeRandom({
   network: testnet,
 });
 
-const bitcoinTransactionBuilder = new bitcoin.Transaction();
-const psbt = new Psbt({ network: testnet });
+// const bitcoinTransactionBuilder = new bitcoin.Transaction();
+// const psbt = new Psbt({ network: testnet });
 
-export const signTransaction = async (
-  psbt: Psbt,
-  node: BIP32Interface
-): Promise<SignedTransactionData> => {
-  // await psbt.signAllInputsHD(node);
-  // await psbt.validateSignaturesOfAllInputs(validator);
-  // await psbt.finalizeAllInputs();
+// export const signTransaction = async (
+//   psbt: Psbt,
+//   node: BIP32Interface
+// ): Promise<SignedTransactionData> => {
+// await psbt.signAllInputsHD(node);
+// await psbt.validateSignaturesOfAllInputs(validator);
+// await psbt.finalizeAllInputs();
 
-  const tx: Transaction = psbt.extractTransaction();
-  const data: SignedTransactionData = {
-    txHex: tx.toHex(),
-    txId: tx.getId(),
-  };
+//   const tx: Transaction = psbt.extractTransaction();
+//   const data: SignedTransactionData = {
+//     txHex: tx.toHex(),
+//     txId: tx.getId(),
+//   };
 
-  return data;
-};
+//   return data;
+// };
 
 const generateWalletAddress = () => {
   const p2pkhAddress = payments.p2pkh({
@@ -147,16 +144,7 @@ const decodeScript = () => {
 };
 
 const main = (): void => {
-  // figlet("ShyBit-CLI", (err, data): void => {
-  //   if (err) {
-  //     console.log("Something went wrong...");
-  //     console.dir(err);
-  //     return;
-  //   }
-  //   console.log(logger.success(data as string));
-  // });
-  // logger.success("Welcome to shyBit-CLI bitcoin Wallet");
-
+  logger.success("welcome to ShyBit-CLI");
   console.log(table.toString());
   const option = prompt("Option : ");
   switch (Number(option)) {

@@ -1,6 +1,9 @@
 {
   "cSpell.words": [
+    "addrs",
     "decoderawtransaction",
+    "ecpair",
+    "shybit",
     "txid",
     "txinwitness",
     "Vout",
