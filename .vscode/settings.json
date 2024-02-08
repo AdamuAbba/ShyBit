@@ -1,8 +1,10 @@
 {
   "cSpell.words": [
     "addrs",
+    "Btrust",
     "decoderawtransaction",
     "ecpair",
+    "preimage",
     "shybit",
     "txid",
     "txinwitness",

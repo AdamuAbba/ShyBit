@@ -1,4 +1,3 @@
-//import packages:
 import { BIP32Interface } from "bip32";
 import * as bitcoin from "bitcoinjs-lib";
 import { Psbt, Transaction, payments } from "bitcoinjs-lib";
@@ -10,6 +9,7 @@ import { ECPairAPI, ECPairFactory, ECPairInterface } from "ecpair";
 import * as ecc from "tiny-secp256k1";
 import { IBitCliTransactionDetails, SignedTransactionData } from "./types";
 var prompt = require("prompt-sync")({ sigint: false });
+import { generateRedeemScriptHex,stackEvaluator } from "./transaction";
 
 const table = new Table({
   head: ["option", "function", "category"],
@@ -19,6 +19,8 @@ const table = new Table({
     ["2", "View Wallet data", "Wallet"],
     ["3", "Decode raw transaction hex", "Transaction"],
     ["4", "Decode Script", "Transaction"],
+    ["4", "Run stack evaluator", "Transaction"],
+    ["5", "Generate Redeem Script hex", "Transaction"],
   ],
 });
 
@@ -139,6 +141,12 @@ const main = (): void => {
       break;
     case 4:
       decodeScript();
+      break;
+    case 5:
+      stackEvaluator();
+      break;
+    case 6:
+      generateRedeemScriptHex();
       break;
     default:
       break;
