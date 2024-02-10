@@ -1,1 +1,1 @@
-export * from "./bitcoin";
+export * from "./bitcoin.js";

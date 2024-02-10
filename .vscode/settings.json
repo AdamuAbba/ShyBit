@@ -10,5 +10,6 @@
     "txinwitness",
     "Vout",
     "vsize"
-  ]
+  ],
+  "typescript.preferences.importModuleSpecifierEnding": "js"
 }
