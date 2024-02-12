@@ -4,10 +4,12 @@
     "Btrust",
     "decoderawtransaction",
     "ecpair",
+    "msghash",
     "preimage",
     "shybit",
     "txid",
     "txinwitness",
+    "Utxo",
     "Vout",
     "vsize"
   ],

@@ -8,15 +8,15 @@ import { logger, prompt } from "../utils/index.js";
 import { generateWalletAddress, checkWalletBalance } from "../wallet/index.js";
 
 const table = new Table({
-  head: ["option", "function", "category"],
-  colWidths: [10, 30, 30],
+  head: ["option", "function", "category", "isDeliverable", "hasTest"],
+  colWidths: [10, 28, 28, 15, 15],
   rows: [
-    ["1", "Create Wallet Address", "Wallet"],
-    ["2", "View Wallet data", "Wallet"],
-    ["3", "Decode raw transaction hex", "Transaction"],
-    ["4", "Decode Script", "Transaction"],
-    ["5", "Run stack evaluator", "Transaction"],
-    ["6", "Generate Redeem Script hex (from preimage)", "Transaction"],
+    ["1", "Create Wallet Address", "Wallet", "true", "true"],
+    ["2", "View Wallet data", "Wallet", "false"],
+    ["3", "Decode raw transaction hex", "Transaction", "true", "true"],
+    ["4", "Decode Script", "Transaction", "true"],
+    ["5", "Run stack evaluator", "Transaction", "true"],
+    ["6", "Generate Redeem Script hex", "Transaction", "true", "true"],
   ],
 });
 

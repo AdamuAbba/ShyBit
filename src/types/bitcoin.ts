@@ -23,6 +23,7 @@ export interface BlockchainInfoErrorResponse {
 }
 
 export interface ITransactionObj {
+  transactionType?: string;
   version: number;
   locktime: number;
   ins: {
