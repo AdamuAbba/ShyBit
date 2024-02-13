@@ -12,7 +12,7 @@ const table = new Table({
   colWidths: [10, 28, 28, 15, 15],
   rows: [
     ["1", "Create Wallet Address", "Wallet", "true", "true"],
-    ["2", "View Wallet data", "Wallet", "false"],
+    ["2", "View Wallet data", "Wallet", "false", "true"],
     ["3", "Decode raw transaction hex", "Transaction", "true", "true"],
     ["4", "Decode Script", "Transaction", "true"],
     ["5", "Run stack evaluator", "Transaction", "true"],
