@@ -5,6 +5,7 @@
 - Requirements
 - Sample view
 - Quick notes
+- Articles
 - Installation
 
 ### Requirements
@@ -31,7 +32,15 @@
 - This repository is a work in progress.
 - `isDeliverable` column identifies a BTrust deliverable from a none BTrust deliverable feature
 
+### Articles
+
+Here are links to my published articles (BTrust deliverables)
+
+- [Simulate your first LND transaction on the Bitcoin regtest network Part 1 (MacOS)-This is a simulation of lightning transactions - a two-part series](https://hashnode.com/post/clsctrvcp00000ale7n0pfur8)
+
 ### installation
+
+Follow the highlighted steps below to install and run the app
 
 ### clone this repo
 
