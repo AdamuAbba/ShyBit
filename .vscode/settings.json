@@ -4,6 +4,7 @@
     "Btrust",
     "decoderawtransaction",
     "ecpair",
+    "EQUALVERIFY",
     "msghash",
     "preimage",
     "shybit",

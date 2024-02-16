@@ -8,15 +8,14 @@ import { logger, prompt } from "../utils/index.js";
 import { generateWalletAddress, checkWalletBalance } from "../wallet/index.js";
 
 const table = new Table({
-  head: ["option", "function", "category", "isDeliverable", "hasTest"],
-  colWidths: [10, 28, 28, 15, 15],
+  head: ["No", "function", "category", "deliverable", "test"],
+  colWidths: [5, 28, 16, 13, 8],
   rows: [
-    ["1", "Create Wallet Address", "Wallet", "true", "true"],
-    ["2", "View Wallet data", "Wallet", "false", "true"],
-    ["3", "Decode raw transaction hex", "Transaction", "true", "true"],
-    ["4", "Decode Script", "Transaction", "true"],
-    ["5", "Run stack evaluator", "Transaction", "true"],
-    ["6", "Generate Redeem Script hex", "Transaction", "true", "true"],
+    ["1", "Create Wallet Address", "wallet", "true", "true"],
+    ["2", "View Wallet data", "wallet", "false", "true"],
+    ["3", "Decode raw transaction hex", "transaction", "true", "true"],
+    ["4", "Run stack evaluator", "transaction", "true", "true"],
+    ["5", "Generate Redeem Script hex", "transaction", "true", "true"],
   ],
 });
 
@@ -37,7 +36,7 @@ const app = (): void => {
     case 4:
       stackEvaluator();
       break;
-    case 6:
+    case 5:
       generateRedeemScriptHex();
       break;
     default:

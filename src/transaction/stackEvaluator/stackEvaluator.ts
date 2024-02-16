@@ -1,18 +1,22 @@
 import { paste } from "copy-paste";
 import * as bitcoin from "bitcoinjs-lib";
-import { logger } from "../../utils/index.js";
+import { logger, prompt } from "../../utils/index.js";
 
-const scriptHexToOpcodesHexGenerator = (scriptHex: string) => {
+export const scriptHexToOpcodesHexGenerator = (scriptHex: string): string => {
+  // Convert hex to Buffer
   const scriptBuffer = Buffer.from(scriptHex, "hex");
-  const compiledScript = bitcoin.script.compile(scriptBuffer);
-  //@ts-expect-error
-  const opcodesHex = compiledScript.map((op) => op.toString("hex")).join("");
-  console.log(opcodesHex);
+  // Create a script from Buffer
+  const script = bitcoin.script.toASM(scriptBuffer);
+  logger.success(`Script with op_codes/values: ${script}`);
+  return script;
 };
 
 export const stackEvaluator = () => {
-  // const script = "010101029301038801027693010487";
-  const hexInput = prompt("paste script hex from clipboard? (yes/no): ");
+  const value = "010101029301038801027693010487";
+  const hexInput = prompt(
+    "paste script hex from clipboard?(yes/no/[hit 'ENTER' for default]): ",
+    { value }
+  );
   switch (hexInput?.toLocaleLowerCase()) {
     case "yes":
       const dataFromClipboard = paste();
@@ -23,6 +27,8 @@ export const stackEvaluator = () => {
       logger.error("Nice going wise guy you broke the app");
       break;
     default:
+      logger.info(`default :${hexInput}`);
+      scriptHexToOpcodesHexGenerator(hexInput);
       break;
   }
 };

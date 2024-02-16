@@ -16,21 +16,21 @@
 
 ### Sample View
 
-| option | function                   | category    | isDeliverable | hasTest |
-| ------ | -------------------------- | ----------- | ------------- | ------- |
-| 1      | Create Wallet Address      | Wallet      | true          | true    |
-| 2      | View Wallet data           | Wallet      |               | true    |
-| 3      | Decode raw transaction hex | Transaction | true          | true    |
-| 4      | Decode Script              | Transaction | true          |         |
-| 5      | Run stack evaluator        | Transaction | true          |         |
-| 6      | Generate Redeem Script hex | Transaction | true          | true    |
+| No  | function                   | category    | deliverable | test |
+| --- | -------------------------- | ----------- | ----------- | ---- |
+| 1   | Create Wallet Address      | wallet      | true        | true |
+| 2   | View Wallet data           | wallet      | false       | true |
+| 3   | Decode raw transaction hex | transaction | true        | true |
+| 4   | Run stack evaluator        | transaction | true        | true |
+| 5   | Generate Redeem Script hex | transaction | true        | true |
 
 ### Quick notes
 
 - All BTrust code deliverables can be found in this repo
-- code for the constructor challenge deliverable can be found [HERE](./src/block%20constructor%20challenge/)
+- code for the Block constructor challenge deliverable can be found [HERE](./src/block%20constructor%20challenge/)
 - This repository is a work in progress.
-- `isDeliverable` column identifies a BTrust deliverable from a none BTrust deliverable feature
+- `deliverable` column identifies a BTrust deliverable from a none BTrust deliverable feature
+- `test` column specifies if a test has been written for a function
 
 ### Articles
 
@@ -65,6 +65,8 @@ npm run dev
 ```
 
 ### run tests
+
+Run the command below to run tests. all tests are written with [Jest](https://jestjs.io/)
 
 ```bash
 npm run test
