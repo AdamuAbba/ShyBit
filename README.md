@@ -36,7 +36,8 @@
 
 Here are links to my published articles (BTrust deliverables)
 
-- [Simulate your first LND transaction on the Bitcoin regtest network Part 1 (MacOS)-This is a simulation of lightning transactions - a two-part series](https://hashnode.com/post/clsctrvcp00000ale7n0pfur8)
+- [Simulate your first Lightning transaction on the Bitcoin regtest network `Part 1` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://shyxperience.hashnode.dev/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-1-macos)
+- [Simulate your first lightning transaction on the Bitcoin regtest network `Part 2` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://shyxperience.hashnode.dev/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-2-macos)
 
 ### installation
 
