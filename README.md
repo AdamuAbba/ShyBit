@@ -36,8 +36,11 @@
 
 Here are links to my published articles (BTrust deliverables)
 
-- [Simulate your first Lightning transaction on the Bitcoin regtest network `Part 1` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://shyxperience.hashnode.dev/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-1-macos)
-- [Simulate your first lightning transaction on the Bitcoin regtest network `Part 2` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://shyxperience.hashnode.dev/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-2-macos)
+- [Simulate your first Lightning transaction on the Bitcoin regtest network `Part 1` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://dev.to/shytypes1028/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-1-macos-4o3c)
+- [Simulate your first lightning transaction on the Bitcoin regtest network `Part 2` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://dev.to/shytypes1028/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-2-macos-2el0)
+- [Simulate your first lightning transaction on the Bitcoin regtest network `Part 3` (MacOS)-This is a simulation of lightning transactions - a three-part series](https://dev.to/shytypes1028/simulate-your-first-lightning-transaction-on-the-bitcoin-regtest-network-part-3-macos-4b22)
+- [Bitcoin - A dummy's technical guide to the bitcoin ecosystem `part 1`](https://dev.to/shytypes1028/bitcoin-a-dummys-technical-guide-to-the-bitcoin-ecosystem-part-1-oje)
+- [Bitcoin - A dummy's technical guide to the bitcoin ecosystem `part 2` (Addresses)](https://dev.to/shytypes1028/bitcoin-a-dummys-technical-guide-to-the-bitcoin-ecosystem-part-2-addresses-2i0a)
 
 ### installation
 
